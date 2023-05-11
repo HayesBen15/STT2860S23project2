@@ -1,0 +1,80 @@
+---
+title: "Final Presentation"
+author: "Author: Ben Hayes"
+date: "`r format(Sys.time(), '%B %d, %Y @ %I:%M %p')`"
+output: ioslides_presentation
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, # hide all the code
+  message = FALSE,
+  warning = FALSE,
+  comment = NA
+)
+```
+
+## Packages Used
+
+I used tidyverse for manipulating and looking at my data for the needed information for ideas.
+
+```{r, echo = TRUE}
+library(tidyverse)
+```
+
+I used ggplot2 in order to graph my data for the interpreations that I made.
+
+```{r, echo = TRUE}
+library(ggplot2)
+```
+
+
+## Smoking Dataset
+
+I acquired my dataset from the website Kaggle. This website can be used to acquire multiple kinds and varities of datasets. The specific link is as follows. [Smoking Dataset from UK](https://www.kaggle.com/datasets/utkarshx27/smoking-dataset-from-uk). The dataset was last modified 15 hours ago at the time of writing (5/10/2023). But, given the subject this information is likely to change in the future.
+
+**Variables in the Dataset:**
+
+* 'gender': Gender with levels Female and Male
+* 'age' : Age of the participants
+* 'marital_status' : Marital status with levels which are Divorced, Married, Separated, Single and Windowed 
+* 'highest_qualification' : Highest Education Levels
+
+##
+* 'nationality' : The participants identified nationality varies from British, English, Irish, SCottish, Welseh, Ohter, Refused, and Unknown
+* 'ethnicity' : The participants ethnicity with levels those being Asian, Black, Chinese, Mixed, White, and Refused/Unknown
+* 'gross_income' : Level of income before taxes which was set by varying income levels generally in 5,200 pounds (roughly equivalent to American Dollars) increments
+* 'region' : From what region they resided in
+* 'smoke' : Yes or no to current smoking status
+* 'amt_weekends' : Amount of cigarettes smoked per day during the weekend
+* 'amt_weekdays' :Amount of cigarettes smoked per day during the weekdays
+* 'type' :Type of cigarette smoked with levels. These being rolled, mainly packets, and mainly hand-rolled
+
+
+```{r}
+SmokingData <- read_csv("smoking.csv")
+```
+
+##
+
+```{r, fig.align = "center", fig.width = 7.5, fig}
+ ggplot(SmokingData, aes(x = smoke)) +
+   geom_bar(color = "black", fill = "steelblue") +
+   scale_y_continuous(breaks = seq(0, 1300, by = 100)) +
+   labs(title = "Smoking Yes or No", x = "Does or Does Not Smoke", y = "Amount of Responses") +
+   theme_minimal()
+```
+
+The first question that I had after using glimpse to view the data was under the smoke variable was there only yes responses or yes and no responses. So, I created this simple plot in order to find out that answer.
+
+##
+
+```{r, fig.align = "center", fig.width = 7.5}
+ggplot(SmokingData, aes(x = age)) +
+  geom_histogram(color = "black", binwidth = 5, aes(fill = smoke)) +
+  facet_wrap(~smoke, scales = "free") +
+  theme_classic() +
+  labs(title = "Smoking by Age", x = "Age in Years", y = "Amount Per Age")
+```
+
+With the previous information in mind I deicded to see the breakdown of those who did and did not smoke by age. As can be seen there is a spike of smokers around ages 25-40 which then decreases with age.

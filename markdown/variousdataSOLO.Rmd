@@ -23,7 +23,12 @@ knitr::opts_chunk$set(
 ### Packages Used
 
 ```{r loadpackages}
-
+library(dplyr)
+library(skimr)
+library(ggplot2)
+library(tidyverse)
+library(tidyr)
+library(readr)
 ```
 
 ## Data Manipulations
@@ -37,65 +42,73 @@ Go to the [description page](https://stat-jet-asu.github.io/Datasets/InstructorD
 Read both datasets from the web and use `glimpse` to explore their structures.
 
 ```{r readNFLplayers2016}
-
+NFLData <- read.csv("https://raw.githubusercontent.com/STAT-JET-ASU/Datasets/master/Instructor/NFLplayers2016.csv")
 ```
 
 ```{r glimpseNFLplayers2016}
-
+glimpse(NFLData)
 ```
 
 ```{r readNFLpositions}
-
+NFLPositions <- read.csv("https://raw.githubusercontent.com/STAT-JET-ASU/Datasets/master/Instructor/NFLpositions.csv")
 ```
 
 ```{r glimpseNFLpositions}
-
+glimpse(NFLPositions)
 ```
 
 #### Investigate the Data
 
 Use a join function to determine if there are any players in the NFL Players 2016 dataset whose positions do not have a matching name in the NFL Positions dataset. Be sure to save the results as an object so you can do further analyses.
 
-```{r}
-
+```{r warning=FALSE}
+AntiJoindf <- anti_join(NFLData, NFLPositions, by = "Position")
 ```
 
 How many players do not have a match in the NFL Positions dataset? Determine this using code.
 
 ```{r}
-
+nrow(AntiJoindf)
 ```
 
 What are the positions of all the players who do not have matches? Determine this using code.
 
 ```{r}
-
+AntiJoindf %>%
+  count(Position)
 ```
 
 What are the position groupings of all the players who do not have matches? Determine this using code.
 
 ```{r}
-
+AntiJoindf %>%
+  count(PositionGrp)
 ```
 
 #### Update NFL Positions
 
 Create a small dataset (tibble) that contains the position abbreviation and its matching position name for any positions that do not have matches in NFL Players 2016 (i.e., the positions you found above). It should have the same structure and variable names as NFL Positions dataset, because in the next step you are going to bind it with the NFL Positions dataset. (*Hint: You can use the player's* `PositionGrp` *value as the position name.*)
 
-```{r}
+Position needed is OL
+PositionEXP + offensive line
 
+```{r}
+OLdata <- tibble(
+  Position  = c("OL"),
+  PositionExp = c("Offensive Line")
+)
 ```
 
 Bind the NFL Positions dataset and the dataset you created above. Your dataset should add a row (or rows, depending on how many positions the tibble you made contains) to the NFL Positions dataset. Be sure to save it as an object so you can use it!
 
 ```{r}
-
+PosnamesOL <- bind_rows(NFLPositions, OLdata)
 ```
 
 Use a join to check that none of the players in NFL Players 2016 are lacking a match in your updated positions dataset. If any of them are lacking a match, revise your code above! If everyone has a match, go on to the next step. 
 
 ```{r}
-
+AntiJoindf <- anti_join(NFLData, PosnamesOL, by = "Position")
 ```
 
 #### Join the Datasets
@@ -116,14 +129,17 @@ Join the NFL Players 2016 dataset and your updated positions dataset so that eac
 * `College`
 * `Jersey`
 
+
 ```{r}
+ExtendedPOSdf <- left_join(NFLData, PosnamesOL, by = "Position") %>%
+  select(Name, Team, Position, PositionExp, PositionGrp, Side, Age, Height, Weight, Years, Playtime, College, Jersey)
 
 ```
 
 Use `skim()` to explore your new joined and rearranged dataset.
 
 ```{r}
-
+skim(ExtendedPOSdf)
 ```
 
 #### Position Analyses
@@ -131,19 +147,23 @@ Use `skim()` to explore your new joined and rearranged dataset.
 What are the top five positions overall (by name) for NFL players in 2016? Determine this using code and display the positions.
 
 ```{r}
-
+TopFivePos <- ExtendedPOSdf %>%
+count(PositionExp) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 5)
 ```
 
-What positions (by name) belong to each `Side`? How many players are in these positions? Determine this using code and display.
+What positions (by name) belong to each `Side`? How many players are in these positions? Determine this using code and display. 
 
 ```{r}
-
+ExtendedPOSdf %>%
+  count("Side", "PositionExp")
 ```
 
 What positions in the positions dataset are not used by any player in 2016? Determine this using code and display the positions.
 
 ```{r}
- 
+ anti_join(PosnamesOL, NFLData, by = "Position")
 ```
 
 #### Save the Data
@@ -151,13 +171,13 @@ What positions in the positions dataset are not used by any player in 2016? Dete
 Use `write_csv()` to save your joined dataset as a `.csv` file in the `data_tidy` folder.
 
 ```{r}
-
+write_csv(ExtendedPOSdf, file = "../data_tidy/ExtendedPOSdf.csv")
 ```
 
 Save your joined dataset as an `.rds` file in the `data_tidy` folder.
 
 ```{r}
-
+saveRDS(ExtendedPOSdf, file = "../data_tidy/ExtendedPOSdf.rds")
 ```
 
 ***

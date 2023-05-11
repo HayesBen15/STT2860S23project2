@@ -1,0 +1,53 @@
+---
+title: "PR02 Becoming a Data Scientist"
+subtitle: "STT2860 Spring 2023"
+author: "Ben Hayes"
+date: "`r format(Sys.time(), '%A, %B %d, %Y @ %I:%M %p')`"
+output: 
+  html_document: 
+    theme: yeti
+    highlight: textmate
+---
+<hr>
+
+**Q1: What is the name of the person interviewed?**
+
+ANSWER: David Meza
+
+**Q2: Why did you choose the particular interview you did?**
+
+ANSWER: I chose this individual because of the fact that they are the Chief Knowledge Architect at NASA which I thought was really cool.
+
+**Q3: Does the person consider themselves a data scientist?**
+
+ANSWER: They consider themselves either a hybrid/quasi data scientist.
+
+**Q4: What is their formal and self-taught education in data science?**
+
+ANSWER: First generation American. Public education and went to University of Houston with a degree in engineering. Went straight into workforce afterwards. Came back later and got a graduate degree that is basically the MBA of Engineers.
+
+**Q5: What has been their career path? Did they start off in data science?**
+
+ANSWER: No, they started in finance and made a switch to operational manager. Then later to NASA which he has moved around in several different positions internally. 
+
+**Q6: What programs/technologies to they use when working in data science?**
+
+ANSWER: Access 1.0. Which is used to make relational models. He has used many of the early computational technologies that were developing during the 80's.
+
+**Q7: What is one interesting (to you) data science problem they have worked on?**
+
+ANSWER: They worked at the giant pool where NASA astronauts were training. He took the data such as amount of time and visits to the pool to determine if they had sufficient training. 
+
+**Q8: Are there any specific pieces of advice they gave that inspire/resonate with you?**
+
+ANSWER: He stated that he is a lifelong learner and that is something that everyone should strive to be. Because we have these amazing minds that are capable of doing amazing things the more we learn.
+
+**Q9: Was there anything that surprised you or that you particularly identified with?**
+
+ANSWER: He describes how he had to step up and become a head of a department at NASA when a posiiton had opened. He had to step up and take the responsibility in order to keep his section alive. I resonate with this since this is only my second year at APP and since I transferred in with so many hours I will graduate next year and I just got into an Accelerated Masters Program here. 
+
+**Q10: How did this person's path differ from the previous interview you watched?**
+
+ANSWER: He differs greatly as he is a bit older and was dealing with these technologies as they were developing. This is very different as the other person essentially started with some of the same programs, but many years later.
+
+<hr>

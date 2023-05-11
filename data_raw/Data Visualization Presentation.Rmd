@@ -1,0 +1,52 @@
+---
+title: "Final Project Data Visualization"
+author: "Ben Hayes"
+date: '2023-05-09'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Setup
+
+### Packages Used
+
+```{r loadpackages}
+library(ggplot2)
+library(tidyverse)
+```
+
+#Dataset
+```{r}
+SmokingData <- read_csv("smoking.csv")
+```
+
+```{r}
+glimpse(SmokingData)
+```
+
+```{r}
+SmokingData %>%
+  count(smoke)
+```
+
+
+```{r}
+ ggplot(SmokingData, aes(x = smoke)) +
+   geom_bar(color = "black", fill = "steelblue") +
+   scale_y_continuous(breaks = seq(0, 1300, by = 100)) +
+   labs(title = "Smoking Yes or No", x = "Does or Does Not Smoke", y = "Amount of Responses") +
+   theme_minimal()
+```
+
+
+```{r}
+ggplot(SmokingData, aes(x = age)) +
+  geom_histogram(color = "black", binwidth = 5, aes(fill = smoke)) +
+  facet_wrap(~smoke, scales = "free") +
+  theme_classic() +
+  labs(title = "Smoking by Age", x = "Age in Years", y = "Amount Per Age")
+```
+
